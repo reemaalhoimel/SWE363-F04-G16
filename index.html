@@ -5,29 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="/css/style.min.css">
-    <script defer src="/js/login.js"></script>
+
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Link to the JavaScript file -->
+    <script defer src="login.js"></script>
 </head>
+
 <body class="login">
+    <div class="header">Resource Guide</div>
     <div class="container">
-        <h2 class="text-center">Login</h2>
-        <br>
-        <form action="/dashboard.html" class="loginForm">
+        <div class="left-section"></div>
+
+        <form action="loading.html" class="loginForm">
+            <h2>Login</h2> 
+            <!-- Error message placeholder -->
+            <div id="form-error" class="form-error" style="display: none;">
+                Incorrect Username/Email or Password
+            </div>
+
             <div class="input-group">
-                <label for="username" class="label">Username</label>
+                <label for="username" class="label">Username or Email</label>
                 <input type="text" id="username" class="input">
                 <span class="error-message"></span>
             </div>
-            <br>
+
             <div class="input-group">
                 <label for="password" class="label">Password</label>
                 <input type="password" id="password" class="input">
                 <span class="error-message"></span>
             </div>
-            <br>
+
+            <!-- Forgot Password Link -->
+            <a href="forgot-password.html" class="forgot-password">Forgot Password?</a>
+
             <button class="button" type="submit">Login</button>
+
+            <!-- Sign-up Link -->
+            <p class="signup-text">
+                Don't have an account? <a href="signup.html" class="signup-link">Sign-up</a>
+            </p>
         </form>
     </div>
 </body>
 </html>
-<!--Hi from Lujain-->
