@@ -226,7 +226,6 @@ body {
 }
 
 
-
 @media (max-width: 768px) {
   .container {
       flex-direction: column;
@@ -241,9 +240,10 @@ body {
       border-radius: 20px 20px 0 0;
   }
 
-  .loginForm {
-      width: 100%;
+  .forgotPasswordForm, .loginForm, .signupForm { /* Target all forms for mobile view */
+      width: 100%; /* Make form full-width */
       padding: 30px;
+      border-radius: 0 0 20px 20px; /* Remove side radius for mobile */
       box-sizing: border-box;
   }
 
@@ -255,3 +255,4 @@ body {
       margin-top: 10px;
   }
 }
+
