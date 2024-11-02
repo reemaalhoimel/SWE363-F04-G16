@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Page</title>
+    <link rel="stylesheet" href="CourseStyle.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header section containing the title and navigation buttons -->
+        <header class="header">
+            <h1 class="logo">Resource Guide</h1>
+            <nav class="nav">
+                <button class="nav-btn">About Us</button>
+                <select class="department-select">
+                    <option value="">Department</option>
+                    <option value="COE">COE</option>
+                    <option value="ICS">ICS</option>
+                    <option value="ITD">ITD</option>
+                    <option value="MATH">MATH</option>
+                </select>
+            </nav>
+        </header>
+        
+        <!-- Course information section -->
+        <section class="course-info">
+            <h2>Math 101 <span class="credits">4-0-4</span></h2>
+            <p class="description">
+                Limits and continuity of functions of a single variable. Differentiability. Techniques of differentiation. Implicit differentiation. Local extrema, first and second derivative tests for local extrema. Concavity and inflection points. Curve sketching. Applied extrema problems. The Mean Value Theorem and applications.
+            </p>
+            <p class="prerequisite"><strong>Prerequisite:</strong> One-year preparatory mathematics or equivalent.</p>
+        </section>
+
+        <!-- Reviews section -->
+        <section class="reviews" id="reviewsContainer">
+            <!-- Reviews will be dynamically generated here -->
+        </section>
+        
+        <!-- Form for posting a new review at the end of the page -->
+        <section class="review-input-container" id="reviewInputContainer">
+            <input type="text" class="review-input" placeholder="Write your opinion on the best sources for this course" id="reviewInput">
+            <button id="submitReviewButton" class="submit-review">Post Review &#10148;</button>
+        </section>
+
+        <!-- reply form (initially hidden) -->
+        <section class="reply-form" id="replyFormContainer" style="display: none;">
+            <input type="text" class="reply-input" placeholder="Write your reply...">
+            <div class="form-buttons">
+               <button class="cancel-button" onclick="resetToDefault()">X</button> <!-- Simple X with white color -->
+               <button class="submit-reply">Send &#10148;</button>
+            </div>
+        </section>  
+        
+
+    </div>
+    <script src="coursePage.js"></script> <!-- Include your JavaScript file -->
+</body>
+</html>
+
+
+
+
+
