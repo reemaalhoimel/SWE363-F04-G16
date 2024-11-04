@@ -12,7 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
             comments: [] // Placeholder for future comments
         }
     ];
+    
+    // variable to store comment ID
+    let commentID;
 
+    // Object to keep track of user votes by review ID
+    const userVotes = {}; // { reviewId: 'upvote' | 'downvote' | null }
     
     // Container where all reviews will be rendered
     const reviewsContainer = document.getElementById('reviewsContainer');
@@ -44,12 +49,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p class="review-content">${linkify(review.content)}</p> <!-- Display review content with clickable links -->
 
                 <div class="review-actions">
-                    <button class="upvote" data-id="${review.id}">&#9650;</button> <!-- Upvote button -->
+                    <button class="upvote ${userVotes[review.id-1] === 'upvote' ? 'active' : ''}" data-id="${review.id}">&#9650;</button> <!-- Upvote button -->
                     <span class="vote-count">${review.upvotes - review.downvotes}</span> <!-- Net vote count -->
-                    <button class="downvote" data-id="${review.id}">&#9660;</button> <!-- Downvote button -->
+                    <button class="downvote ${userVotes[review.id-1] === 'downvote' ? 'active' : ''}" data-id="${review.id}">&#9660;</button> <!-- Downvote button -->
                     <button class="comment" data-id="${review.id}">&#128172;</button> <!-- Comment button -->
                 </div>
             `;
+
+            // Add comments to each review
+            if (review.comments.length != 0) {
+                let commentsHTML = `
+                    <div class="review-reply">  
+                `;
+    
+                review.comments.forEach(comment => {
+                    commentsHTML += `
+                        <div class="reply-header">
+                            <div class="user-icon">&#128100;</div> <!-- User icon for display -->
+                            <span class="username">NewUser</span> <!-- Display author (placeholder)-->
+                        </div> 
+                        <p class="comment">${linkify(comment)}</p>
+                    `;
+                });
+
+                commentsHTML += `
+                    </div>  
+                `;
+
+        reviewElem.innerHTML += commentsHTML;
+                
+            }
+
             reviewsContainer.appendChild(reviewElem); // Append the review element to the container
         });
     }
@@ -58,7 +88,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function upvotePost(id) {
         const review = reviews.find(r => r.id === id);
         if (review) {
-            review.upvotes++; // Increment the upvotes count
+            if (userVotes[id-1] === 'upvote') {
+                // If the user clicks upvote again, reset the vote
+                review.upvotes--;
+                userVotes[id-1] = null;
+            } else {
+                // If the user had downvoted before, decrease downvote count
+                if (userVotes[id-1] === 'downvote') {
+                    review.downvotes--;
+                    userVotes[id-1] = null;
+                } else {
+                    // Increment upvote count and set userVote to 'upvote'
+                    review.upvotes++;
+                    userVotes[id-1] = 'upvote';
+                }
+            }
             renderReviews(); // Re-render the reviews to reflect the updated vote
         }
     }
@@ -67,7 +111,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function downvotePost(id) {
         const review = reviews.find(r => r.id === id);
         if (review) {
-            review.downvotes++; // Increment the downvotes count
+            if (userVotes[id-1] === 'downvote') {
+                // If the user clicks downvote again, reset the vote
+                review.downvotes--;
+                userVotes[id-1] = null;
+            } else {
+                // If the user had upvoted before, decrease upvote count
+                if (userVotes[id-1] === 'upvote') {
+                    review.upvotes--;
+                    userVotes[id-1] = null;
+                } else {
+                    // Increment downvote count and set userVote to 'downvote'
+                    review.downvotes++;
+                    userVotes[id-1] = 'downvote';
+                }
+            }
             renderReviews(); // Re-render the reviews to reflect the updated vote
         }
     }
@@ -82,6 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
             downvotePost(id); // Handle downvote button click
         } else if (event.target.matches('.comment')) {
             // Placeholder for handling comment button click
+            commentID = parseInt(event.target.getAttribute('data-id'));
             showReplyForm();
         }
     });
@@ -89,13 +148,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to show the reply form and hide the review input container
     function showReplyForm() {
         document.getElementById('reviewInputContainer').style.display = 'none'; // Hide the main review input section
-        document.getElementById('replyFormContainer').style.display = 'block'; // Display the reply form section
+        document.getElementById('replyFormContainer').style.display = 'flex'; // Display the reply form section
     }
 
     // Function to reset the view to the default state
     function resetToDefault() {
         document.getElementById('replyFormContainer').style.display = 'none'; // Hide the reply form
-        document.getElementById('reviewInputContainer').style.display = 'block'; // Show the main review input section
+        document.getElementById('reviewInputContainer').style.display = 'flex'; // Show the main review input section
     }
 
     // Event listener for the submit button to add a new review
@@ -112,6 +171,23 @@ document.addEventListener('DOMContentLoaded', () => {
         reviews.push(newReview); // Add new review to the list
         reviewInput.value = ''; // Clear input field
         renderReviews(); // Re-render reviews to show the new entry
+    });
+
+    // Event listener for the cancel button of the comment input
+    document.getElementById('cancel-button').addEventListener('click', (e) => {
+        resetToDefault();
+    });
+    
+    // Event listener for the send button to add a new comment
+    document.getElementById('submit-reply').addEventListener('click', (e) => {
+        const replyInput = document.getElementById('replyInput');
+        const review = reviews.find(r => r.id === commentID);
+        if (review) {
+            reviews[commentID - 1].comments.push(replyInput.value);
+            replyInput.value = '';
+            renderReviews(); // Re-render the reviews to reflect the updated vote
+        }
+        resetToDefault();
     });
 
     // Initial rendering of reviews
