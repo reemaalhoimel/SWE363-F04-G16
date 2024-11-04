@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="CourseStyle.css">
 </head>
 <body>
-    <div class="container">
+    <!--<div class="container">-->
         <!-- Header section containing the title and navigation buttons -->
         <header class="header">
             <h1 class="logo">Resource Guide</h1>
@@ -45,15 +45,15 @@
 
         <!-- reply form (initially hidden) -->
         <section class="reply-form" id="replyFormContainer" style="display: none;">
-            <input type="text" class="reply-input" placeholder="Write your reply...">
+            <input type="text" class="reply-input" placeholder="Write your reply..." id="replyInput">
             <div class="form-buttons">
-               <button class="cancel-button" onclick="resetToDefault()">X</button> <!-- Simple X with white color -->
-               <button class="submit-reply">Send &#10148;</button>
+               <button class="cancel-button" id="cancel-button" onclick="resetToDefault()">X</button> <!-- Simple X with white color -->
+               <button class="submit-reply" id="submit-reply">Send &#10148;</button>
             </div>
         </section>  
         
 
-    </div>
+    <!--</div>-->
     <script src="coursePage.js"></script> <!-- Include your JavaScript file -->
 </body>
 </html>
