@@ -47,6 +47,7 @@ class Login {
                     } else {
                         window.location.href = "homePage.html"; // Regular user view
                     }
+                    localStorage.setItem('name', username)
                 } else {
                     this.showErrorMessage("Incorrect Username/Email or Password");
                 }
