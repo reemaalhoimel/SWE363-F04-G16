@@ -1,10 +1,11 @@
 // Initialize sample user data in localStorage (for testing only)
-if (!localStorage.getItem('users')) {
-    const users = {
-        admin: { password: 'admin123' }, // Example regular user
-        $superadmin: { password: 'superadmin123' } // Admin user (username starts with $)
+if (!localStorage.getItem('Users')) {
+    const Users = {
+        "user": { password: 'user1234' }, // regular user
+        "$superadmin": { password: 'superadmin12' }, // Super-admin user
+        "#admin": { password: 'admin123' } // Admin user (username starts with #)
     };
-    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('Users', JSON.stringify(Users));
 }
 
 class Login {
@@ -12,8 +13,8 @@ class Login {
         this.form = form;
         this.fields = fields;
         this.validateOnSubmit();
-        this.addForgotPasswordListener(); // Listener for forgot password
-        this.addSignupListener(); // Listener for sign-up link
+        this.addForgotPasswordListener();
+        this.addSignupListener();
     }
 
     validateOnSubmit() {
@@ -32,12 +33,20 @@ class Login {
                 const username = document.querySelector("#username").value.trim();
                 const password = document.querySelector("#password").value.trim();
 
-                if (this.authenticateUser(username, password)) {
+                // Check user authentication and role-based redirection
+                const role = this.authenticateUser(username, password);
+
+                if (role) {
                     localStorage.setItem("auth", 1);
-                    if (username.startsWith('$')) {
-                        alert("Welcome, Admin!");
+                    
+                    // Redirect based on role
+                    if (role === "super-admin") {
+                        window.location.href = "homePageAdmin.html"; // Super-admin view
+                    } else if (role === "admin") {
+                        window.location.href = "homePageModerator.html"; // Admin view
+                    } else {
+                        window.location.href = "homePage.html"; // Regular user view
                     }
-                    this.form.submit(); // Submit if authentication is successful
                 } else {
                     this.showErrorMessage("Incorrect Username/Email or Password");
                 }
@@ -50,7 +59,7 @@ class Login {
         if (forgotPasswordLink) {
             forgotPasswordLink.addEventListener("click", (e) => {
                 e.preventDefault();
-                window.location.href = "forgot-password.html"; // Adjusted path
+                window.location.href = "forgot-password.html";
             });
         }
     }
@@ -60,7 +69,7 @@ class Login {
         if (signupLink) {
             signupLink.addEventListener("click", (e) => {
                 e.preventDefault();
-                window.location.href = "signup.html"; // Adjusted path
+                window.location.href = "signup.html";
             });
         }
     }
@@ -80,8 +89,27 @@ class Login {
     }
 
     authenticateUser(username, password) {
-        const users = JSON.parse(localStorage.getItem('users'));
-        return users[username] && users[username].password === password;
+        const Users = JSON.parse(localStorage.getItem('Users'));
+        console.log("Stored Users:", Users); // Debug: log stored users to check data format
+        
+        // Debugging step: check if the username and password are retrieved correctly
+        if (Users[username]) {
+            console.log(`Checking user: ${username}`);
+            console.log(`Stored password: ${Users[username].password}, Entered password: ${password}`);
+        }
+
+        // Check if the user exists and validate password
+        if (Users[username] && Users[username].password === password) {
+            // Determine role based on the username prefix
+            if (username.startsWith('$')) {
+                return "super-admin";
+            } else if (username.startsWith('#')) {
+                return "admin";
+            } else {
+                return "user"; // Regular user
+            }
+        }
+        return null; // Authentication failed
     }
 
     setStatus(input, message, status) {
