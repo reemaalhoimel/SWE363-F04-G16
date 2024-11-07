@@ -25,7 +25,7 @@ document.querySelector(".signupForm").addEventListener("submit", (e) => {
     }
 
     users[username] = { password };
-    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("Users", JSON.stringify(Users));
 
     alert("Account created successfully!");
     window.location.href = "index.html"; // Redirect to login page
