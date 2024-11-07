@@ -17,7 +17,7 @@ document.querySelector(".signupForm").addEventListener("submit", (e) => {
     }
 
     // Store the user data (for testing purposes only)
-    const users = JSON.parse(localStorage.getItem("users")) || {};
+    const users = JSON.parse(localStorage.getItem("Users")) || {};
 
     if (users[username]) {
         showErrorMessage("Username already exists. Please choose a different one.");
@@ -25,7 +25,7 @@ document.querySelector(".signupForm").addEventListener("submit", (e) => {
     }
 
     users[username] = { password };
-    localStorage.setItem("Users", JSON.stringify(Users));
+    localStorage.setItem("Users", JSON.stringify(users));
 
     alert("Account created successfully!");
     window.location.href = "index.html"; // Redirect to login page
