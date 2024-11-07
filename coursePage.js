@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             id: 1,
             author: 'خالد الشهري',
-            content: 'The course is very hard, but with dr Ahmad Moqbel help setions it would be better, here is his vedios https://www.youtube.com/watch?v=f5YX5St-VOs&list=PLz6mTkhaxogQHF21NInRTmVmYsT5RkSxj ...',
+            content: 'The course is very hard, but with dr Ahmad Moqbel help setions it would be better, here is his videos https://www.youtube.com/watch?v=f5YX5St-VOs&list=PLz6mTkhaxogQHF21NInRTmVmYsT5RkSxj ...',
             upvotes: 3,
             downvotes: 1,
             comments: [] // Placeholder for future comments
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     commentsHTML += `
                         <div class="reply-header">
                             <div class="user-icon">&#128100;</div> <!-- User icon for display -->
-                            <span class="username">NewUser</span> <!-- Display author (placeholder)-->
+                            <span class="username">${localStorage.getItem("name")}</span> <!-- Display author (placeholder)-->
                         </div> 
                         <p class="comment">${linkify(comment)}</p>
                     `;
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const reviewInput = document.getElementById('reviewInput'); // Get input value
         const newReview = {
             id: reviews.length + 1, // Generate new ID based on array length
-            author: 'NewUser', // Placeholder author name
+            author: localStorage.getItem("name"), // Placeholder author name
             content: reviewInput.value, // Review content from input field
             upvotes: 0, // Initial upvote count
             downvotes: 0, // Initial downvote count
@@ -189,6 +189,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         resetToDefault();
     });
+
+    // Event listener for the about us button
+    document.getElementById('aboutUs').addEventListener('click', (e) => {
+        window.location.href = "aboutUs.html";
+    })
 
     // Initial rendering of reviews
     renderReviews();
