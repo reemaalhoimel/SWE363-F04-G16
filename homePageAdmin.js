@@ -1,4 +1,4 @@
-
+let courseToDelete = null; 
 
 function selectDepartment(department) {
     // Update dropdown button label to the selected department
@@ -51,6 +51,7 @@ function deleteCourse(button) {
 
 function openAddCoursePopup() {
     document.getElementById("addCoursePopup").style.display = "flex";
+    popup.style.flexDirection = "column";
 }
 
 function closeAddCoursePopup() {
@@ -95,20 +96,37 @@ function closeDeletePopup() {
             closeDeletePopup(); // Close the pop-up
     }
 
-    function showError(inputId, message) {
-        const inputField = document.getElementById(inputId);
-
-        // Check if an error message already exists
-        let errorMessage = inputField.nextElementSibling;
+    function setStatus(input, message, status) {
+        let errorMessage = input.nextElementSibling;
         if (!errorMessage || !errorMessage.classList.contains('error-message')) {
             errorMessage = document.createElement("span");
             errorMessage.classList.add("error-message");
-            inputField.parentNode.insertBefore(errorMessage, inputField.nextSibling);
+            input.parentNode.appendChild(errorMessage);
         }
-
-        // Set the error message and make it visible
-        errorMessage.textContent = message;
-        errorMessage.style.display = "block";
+    
+        if (status === "success") {
+            errorMessage.innerText = "";
+            input.classList.remove("input-error");
+        } else if (status === "error") {
+            errorMessage.innerText = message;
+            errorMessage.style.display = "block";
+            input.classList.add("input-error");
+        }
+    }
+    
+    function showError(inputId, message) {
+        const inputField = document.getElementById(inputId);
+        setStatus(inputField, message, "error");
+    }
+    
+    function clearErrors() {
+        document.querySelectorAll('.input-error').forEach(input => {
+            input.classList.remove('input-error');
+        });
+        document.querySelectorAll('.error-message').forEach(error => {
+            error.style.display = "none";
+            error.innerText = "";
+        });
     }
 
 
@@ -138,6 +156,7 @@ function closeDeletePopup() {
         const labCredits = document.getElementById("LabCredits").value.trim();
 
         let isValid = true;
+        clearErrors();
 
         // Validation checks with error display
         if (!name) {

@@ -41,13 +41,12 @@ class Login {
                     
                     // Redirect based on role
                     if (role === "super-admin") {
-                        window.location.href = "homePageAdmin.html"; // Super-admin view
+                        window.location.href = "loadingSuperAdmin.html"; // Super-admin view
                     } else if (role === "admin") {
-                        window.location.href = "homePageModerator.html"; // Admin view
+                        window.location.href = "loadingAdmin.html"; // Admin view
                     } else {
-                        window.location.href = "homePage.html"; // Regular user view
+                        window.location.href = "loading.html"; // Regular user view
                     }
-                    localStorage.setItem('name', username)
                 } else {
                     this.showErrorMessage("Incorrect Username/Email or Password");
                 }

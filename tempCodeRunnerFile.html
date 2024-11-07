@@ -13,6 +13,8 @@
     <h1>Resource Guide</h1>
     <nav>
         <ul>
+            <li><button id="addCourseBtn" onclick="openAddCoursePopup()">Add Course</button></li>
+            <li><button id="deleteCourseBtn" onclick="toggleDeleteMode()">Delete Course</button></li>
             <li><a href="aboutUsAdmin.html" class="about-us">About Us</a></li>
             <li class="dropdown">
                 <a href="javascript:void(0)" id="departmentButton">Department <span class="arrow">&#9662;</span></a>
@@ -35,11 +37,6 @@
     </div>
 </div>
 
-<div class="button-container">
-    <button id="addCourseBtn" onclick="openAddCoursePopup()">Add Course</button>
-    <button id="deleteCourseBtn" onclick="toggleDeleteMode()">Delete Course</button>
-</div>
-
 <div class="course-grid">
     <div class="course-button course-math">MATH 101 <button class="delete-btn" onclick="showDeletePopup(this)">x</button></div>
     <div class="course-button course-math">MATH 102 <button class="delete-btn" onclick="showDeletePopup(this)">x</button></div>
@@ -52,7 +49,6 @@
     <div class="course-button course-engl">ENGL 102 <button class="delete-btn" onclick="showDeletePopup(this)">x</button></div>
     <div class="course-button course-engl">ENGL 214 <button class="delete-btn" onclick="showDeletePopup(this)">x</button></div>
 </div>
-
 <div class="popup-overlay" id="addCoursePopup">
     <div class="popup-container">
         <div class="popup-header">
@@ -63,9 +59,7 @@
             <div class="form-group">
                 <label for="courseNameInput">Course Name:</label>
                 <input type="text" id="courseNameInput">
-                <div class="error-message" style="display:none;"></div>
             </div>
-
             <div class="form-group">
                 <label for="courseDepartment">Department:</label>
                 <select id="courseDepartment">
@@ -74,31 +68,22 @@
                     <option value="swe">Software Engineering</option>
                     <option value="engl">English</option>
                 </select>
-                <div class="error-message" style="display:none;"></div>
             </div>
-
             <div class="form-group">
                 <label for="courseCode">Course Code:</label>
                 <input type="text" id="courseCode">
-                <div class="error-message" style="display:none;"></div>
             </div>
-
             <div class="form-group">
                 <label for="courseDescription">Description:</label>
                 <textarea id="courseDescription"></textarea>
-                <div class="error-message" style="display:none;"></div>
             </div>
-
             <div class="form-group">
                 <label for="LecCredits">Lecture Hours:</label>
                 <input type="number" id="LecCredits" min="0">
-                <div class="error-message" style="display:none;"></div>
             </div>
-            
             <div class="form-group">
                 <label for="LabCredits">Lab Hours:</label>
                 <input type="number" id="LabCredits" min="0">
-                <div class="error-message" style="display:none;"></div>
             </div>
             <div class="buttons">
                 <button type="button" class="save-btn" onclick="addCourse()">Add Course</button>

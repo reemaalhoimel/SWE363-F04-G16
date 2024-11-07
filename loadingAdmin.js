@@ -8,6 +8,6 @@ window.onload = function () {
 
     // Redirect to login page after 3 seconds
     setTimeout(() => {
-        window.location.href = 'homePage.html'; // Adjust path based on folder structure
+        window.location.href = 'homePageModerator.html'; // Adjust path based on folder structure
     }, 3000);
 };

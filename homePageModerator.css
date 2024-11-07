@@ -173,6 +173,20 @@ nav a {
     text-align: center;
 }
 
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-bottom: 5px; /* Adds space between the message and the input */
+    display: block; /* Ensure it is displayed above the input */
+}
+
+/* Styling for input fields with errors */
+input.error-border,
+select.error-border,
+textarea.error-border {
+    border: 2px solid red; /* Red border for inputs with errors */
+}
+
 @media (max-width: 600px) {
     .course-grid {
         grid-template-columns: repeat(2, 1fr); /* Show 2 courses per row on small screens */
