@@ -3,7 +3,7 @@
 const db = require("../config/db");
 
 const BanSchema = new db.Schema({
-  adminUsername: { type: String, required: true, ref: "Admin" },
+  adminUsername: { type: String, required: true, ref: "User" },
   username: { type: String, required: true, ref: "User" },
   email: { type: String, required: true },
 });
